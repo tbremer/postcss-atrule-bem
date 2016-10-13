@@ -46,7 +46,8 @@ export default postcss.plugin('postcss-atrule-bem', () => { //eslint-disable-lin
   return root => {
     root.walkAtRules(BLOCK, rule => {
       const container = postcss.root();
-      const baseSelector = createSelector(undefined, rule.params, rule.name);
+      const clone = rule.clone();
+      const baseSelector = createSelector(undefined, clone.params, clone.name);
       const baseRule = postcss.rule({
         selector: baseSelector,
         nodes: rule.nodes
