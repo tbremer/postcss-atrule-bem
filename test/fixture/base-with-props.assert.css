@@ -1,0 +1,11 @@
+@block foo {
+    prop1: val;
+
+    @element bar {
+        prop2: val;
+
+        @modifier baz {
+            prop3: val;
+        }
+    }
+}

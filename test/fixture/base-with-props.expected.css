@@ -1,0 +1,9 @@
+.foo {
+    prop1: val
+}
+.foo__bar {
+    prop2: val
+}
+.foo__bar--baz {
+    prop3: val
+}

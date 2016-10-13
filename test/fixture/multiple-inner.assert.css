@@ -1,0 +1,8 @@
+@block foo {
+    @element bar {}
+    @element baz {}
+    @element lorem {
+        @modifier ipsum {}
+    }
+    @modifier bing {}
+}
