@@ -1,4 +1,13 @@
 {
+  "name": "postcss-atrule-bem",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/tbremer/postcss-bem-atrule.git",
+    "type": "git"
+  },
+  "author": "Tom Bremer <tom@tbremer.com>",
+  "license": "MIT",
   "scripts": {
     "pretest": "eslint index.js",
     "test": "mocha --compilers js:babel-register",
