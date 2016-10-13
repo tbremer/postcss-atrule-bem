@@ -38,7 +38,7 @@ function recursivelyCleanChildren(node) {
 
       return all;
     }, [])
-    .forEach(_ => n.removeChild(_));
+      .forEach(_ => n.removeChild(_));
   }
 }
 
@@ -56,7 +56,7 @@ export default postcss.plugin('postcss-atrule-bem', () => { //eslint-disable-lin
       walkChildren(baseRule, container);
       container.prepend(baseRule);
       recursivelyCleanChildren(container);
-      rule.replaceWith(...container.nodes);
+      rule.replaceWith(container.nodes);
     });
   };
 });

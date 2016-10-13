@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "pretest": "eslint index.js",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "npm run test -- --watch --reporter min"
   },
