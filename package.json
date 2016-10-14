@@ -14,6 +14,12 @@
     "test": "mocha --compilers js:babel-register",
     "test:watch": "npm run test -- --watch --reporter min"
   },
+  "keywords": [
+    "postcss",
+    "postcss plugin",
+    "bem",
+    "css"
+  ],
   "dependencies": {
     "postcss": "^5.2.4"
   },
