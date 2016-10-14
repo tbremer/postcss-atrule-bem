@@ -9,7 +9,7 @@
   "author": "Tom Bremer <tom@tbremer.com>",
   "license": "MIT",
   "scripts": {
-    "prepublish": "babel index.js lib/index.js",
+    "prepublish": "babel index.js --out-file lib/index.js",
     "lint": "eslint ./",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "npm run test -- --watch --reporter min"
