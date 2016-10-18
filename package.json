@@ -18,6 +18,7 @@
     "postcss",
     "postcss plugin",
     "bem",
+    "atrule",
     "css"
   ],
   "dependencies": {
