@@ -1,7 +1,7 @@
 {
   "name": "postcss-atrule-bem",
   "description": "Efficiently create BEM components.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "repository": {
     "url": "https://github.com/tbremer/postcss-bem-atrule.git",
