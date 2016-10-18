@@ -13,7 +13,7 @@ function createSelector(baseClass, selector, type) {
   }
 }
 
-function walkChildren(rule, root) {
+function walkChildren(rule, root, originalParent, result) {
   for (const node of rule.nodes) {
     if (node.type !== 'atrule') continue;
     if (SUBRULES.indexOf(node.name) === -1) continue;
@@ -25,7 +25,7 @@ function walkChildren(rule, root) {
     });
 
     root.append(newRule);
-    walkChildren(newRule, root);
+    walkChildren(newRule, root, originalParent, result);
   }
 }
 
@@ -38,25 +38,23 @@ function recursivelyCleanChildren(node) {
 
       return all;
     }, [])
-      .forEach(_ => n.removeChild(_));
+    .forEach(_ => n.removeChild(_));
   }
 }
 
-export default postcss.plugin('postcss-atrule-bem', () => { //eslint-disable-line
-  return root => {
-    root.walkAtRules(BLOCK, rule => {
-      const container = postcss.root();
-      const clone = rule.clone();
-      const baseSelector = createSelector(undefined, clone.params, clone.name);
-      const baseRule = postcss.rule({
-        selector: baseSelector,
-        nodes: rule.nodes
-      });
-
-      walkChildren(baseRule, container);
-      container.prepend(baseRule);
-      recursivelyCleanChildren(container);
-      rule.replaceWith(container);
+export default postcss.plugin('postcss-atrule-bem', () => (root, result) => {
+  root.walkAtRules(BLOCK, rule => {
+    const container = postcss.root();
+    const clone = rule.clone();
+    const baseSelector = createSelector(undefined, clone.params, clone.name);
+    const baseRule = postcss.rule({
+      selector: baseSelector,
+      nodes: rule.nodes
     });
-  };
+
+    walkChildren(baseRule, container, clone, result);
+    container.prepend(baseRule);
+    recursivelyCleanChildren(container);
+    rule.replaceWith(container);
+  });
 });

@@ -2,22 +2,26 @@ import expect from 'expect';
 import plugin from '../';
 import { readFileSync } from 'fs';
 
-describe('atrule-bem', () => {
-  [
-    'base',
-    'base-with-props',
-    'multiple-inner',
-    'multiple-blocks'
-  ].forEach(file => {
-    it(`${file} should process correctly`, done => {
-      const testCss = readFileSync(`./test/fixture/${file}.assert.css`).toString();
-      const expectedCss = readFileSync(`./test/fixture/${file}.expected.css`).toString();
+const tests = [
+  'base',
+  'base-with-props',
+  'multiple-inner',
+  'multiple-blocks',
+  'warning-element-nested-element'
+];
 
-      plugin.process(testCss)
-        .then(res => {
-          expect(res.css).toBe(expectedCss, 'Plugin output and Expected don\'t match');
-          done();
-        });
+describe('atrule-bem', () => {
+  for (const test of tests) {
+    describe(test, () => {
+      it('should pass', () => {
+        const testCss = readFileSync(`./test/fixture/${test}.assert.css`).toString();
+        const expectedCss = readFileSync(`./test/fixture/${test}.expected.css`).toString();
+
+        return plugin.process(testCss)
+          .then(res => {
+            expect(res.css).toEqual(expectedCss);
+          });
+      });
     });
-  });
+  }
 });

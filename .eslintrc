@@ -1,3 +1,7 @@
 {
-    "extends": "tbremer"
+  "extends": "tbremer",
+    "rules": {
+      "arrow-body-style": ["error", "as-needed"],
+      "max-params": ["error", 4]
+    }
 }
