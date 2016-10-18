@@ -78,6 +78,10 @@ postcss([ atRuleBem() ])
 
 Open for pull requests in the following areas:
 
+- Collision dectection
+  - throw a warning and don't compile when:
+    - a block is created twice (name collisions)
+    - a block makes reference to another block
 - Strict mode (as an option)
 	- disallow blocks to have blocks as children
 	- disallow elements to have blocks as children
