@@ -1,60 +1,98 @@
-import * as postcss from 'postcss';
+/* eslint no-//console: 0 */
+import postcss from 'postcss';
 
 const BLOCK = 'block';
 const ELEMENT = 'element';
 const MODIFIER = 'modifier';
-const SUBRULES = [ ELEMENT, MODIFIER ];
+const VALIDRULES = [ BLOCK, ELEMENT, MODIFIER ];
+const validChildren = {
+  [BLOCK]: [ ELEMENT, MODIFIER ],
+  [ELEMENT]: [ MODIFIER ],
+  [MODIFIER]: []
+};
 
-function createSelector(baseClass, selector, type) {
-  switch (type) {
-    case ELEMENT: return `${baseClass}__${selector}`;
-    case MODIFIER: return `${baseClass}--${selector}`;
-    default: return `.${selector}`;
+function separatorByName(name) {
+  switch (name) {
+    case ELEMENT: return '__';
+    case MODIFIER: return '--';
+    default: return '.';
   }
 }
 
-function walkChildren(rule, root, originalParent, result) {
-  for (const node of rule.nodes) {
-    if (node.type !== 'atrule') continue;
-    if (SUBRULES.indexOf(node.name) === -1) continue;
-
-    const selector = createSelector(rule.selector, node.params, node.name);
-    const newRule = postcss.rule({
-      selector,
-      nodes: node.nodes
-    });
-
-    root.append(newRule);
-    walkChildren(newRule, root, originalParent, result);
-  }
+function classGenerator(obj) {
+  return `${separatorByName(obj.type)}${obj.value}`;
 }
 
-function recursivelyCleanChildren(node) {
-  for (const n of node.nodes) {
-    n.nodes.reduce((all, curr) => {
-      if (curr.type !== 'atrule') return all;
-      if (SUBRULES.indexOf(curr.name) === -1) return all;
-      all.push(curr);
+function selectorObjsToString(selectors) {
+  let str = '';
 
-      return all;
+  for (const obj of selectors) {
+    str += classGenerator(obj);
+  }
+
+  return str;
+}
+
+function generateSelector(rule, selectors = []) {
+  selectors.push({
+    type: rule.name,
+    value: rule.params
+  });
+
+  if (rule.parent && rule.parent.type !== 'root') {
+    return generateSelector(rule.parent, selectors);
+  }
+
+  return selectorObjsToString(selectors.reverse());
+}
+
+function childValidated(child, parent) {
+  return validChildren[parent.name].indexOf(child.name) !== -1;
+}
+
+function cleanChildren(container) {
+  const clone = container.clone();
+
+  for (const rule of clone.nodes) {
+    rule.nodes.reduce((a, c) => {
+      if (c.type !== 'atrule') return a;
+      if (c.__atrulebem__ && !c.__atrulebem__.valid) return a;
+      if (VALIDRULES.indexOf(c.name) === -1) return a;
+
+      a.push(c);
+
+      return a;
     }, [])
-    .forEach(_ => n.removeChild(_));
+      .forEach(_ => rule.removeChild(_));
   }
+
+  return clone;
 }
 
 export default postcss.plugin('postcss-atrule-bem', () => (root, result) => {
-  root.walkAtRules(BLOCK, rule => {
+  root.walkAtRules(BLOCK, block => {
     const container = postcss.root();
-    const clone = rule.clone();
-    const baseSelector = createSelector(undefined, clone.params, clone.name);
-    const baseRule = postcss.rule({
-      selector: baseSelector,
-      nodes: rule.nodes
+
+    container.append(postcss.rule({
+      selector: generateSelector(block),
+      nodes: block.nodes
+    }));
+
+    block.walkAtRules(child => {
+      if (VALIDRULES.indexOf(child.name) === -1) return;
+      if (!childValidated(child, child.parent)) {
+        child.__atrulebem__ = { valid: false };
+        container.warn(result, `Type ${String(child.name)} cannot have child of ${String(child.parent.name)}`);
+
+        return;
+      }
+
+      container.append(postcss.rule({
+        selector: generateSelector(child),
+        nodes: child.nodes
+      }));
     });
 
-    walkChildren(baseRule, container, clone, result);
-    container.prepend(baseRule);
-    recursivelyCleanChildren(container);
-    rule.replaceWith(container);
+    block.replaceWith(cleanChildren(container));
   });
 });

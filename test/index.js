@@ -1,5 +1,5 @@
 import expect from 'expect';
-import plugin from '../';
+import plugin from '../index';
 import { readFileSync } from 'fs';
 
 const tests = [
@@ -7,7 +7,10 @@ const tests = [
   'base-with-props',
   'multiple-inner',
   'multiple-blocks',
-  'warning-element-nested-element'
+  'warning-block-in-block',
+  'warning-element-in-element',
+  'warning-modifier-in-modifier',
+  'warning-element-in-modifier'
 ];
 
 describe('atrule-bem', () => {
@@ -20,6 +23,9 @@ describe('atrule-bem', () => {
         return plugin.process(testCss)
           .then(res => {
             expect(res.css).toEqual(expectedCss);
+            if (/warning/.test(test)) {
+              expect(res.messages.length).toEqual(1);
+            }
           });
       });
     });

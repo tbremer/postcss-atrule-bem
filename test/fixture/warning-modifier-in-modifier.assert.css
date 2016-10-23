@@ -1,0 +1,5 @@
+@block a {
+    @modifier b {
+        @modifier c {}
+    }
+}
