@@ -1,4 +1,3 @@
-/* eslint no-//console: 0 */
 import postcss from 'postcss';
 
 const BLOCK = 'block';
@@ -9,6 +8,10 @@ const validChildren = {
   [BLOCK]: [ ELEMENT, MODIFIER ],
   [ELEMENT]: [ MODIFIER ],
   [MODIFIER]: []
+};
+const BASE_OPTIONS = {
+  strict: true,
+  warn: true
 };
 
 function separatorByName(name) {
@@ -69,30 +72,34 @@ function cleanChildren(container) {
   return clone;
 }
 
-export default postcss.plugin('postcss-atrule-bem', () => (root, result) => {
-  root.walkAtRules(BLOCK, block => {
-    const container = postcss.root();
+export default postcss.plugin('postcss-atrule-bem', options => {
+  const opts = Object.assign({}, BASE_OPTIONS, options);
 
-    container.append(postcss.rule({
-      selector: generateSelector(block),
-      nodes: block.nodes
-    }));
-
-    block.walkAtRules(child => {
-      if (VALIDRULES.indexOf(child.name) === -1) return;
-      if (!childValidated(child, child.parent)) {
-        child.__atrulebem__ = { valid: false };
-        container.warn(result, `Type ${String(child.name)} cannot have child of ${String(child.parent.name)}`);
-
-        return;
-      }
+  return (root, result) => {
+    root.walkAtRules(BLOCK, block => {
+      const container = postcss.root();
 
       container.append(postcss.rule({
-        selector: generateSelector(child),
-        nodes: child.nodes
+        selector: generateSelector(block),
+        nodes: block.nodes
       }));
-    });
 
-    block.replaceWith(cleanChildren(container));
-  });
+      block.walkAtRules(child => {
+        if (VALIDRULES.indexOf(child.name) === -1) return;
+        if (opts.strict && !childValidated(child, child.parent)) {
+          child.__atrulebem__ = { valid: false };
+          if (opts.warn) container.warn(result, `Type ${String(child.name)} cannot have child of ${String(child.parent.name)}`);
+
+          return;
+        }
+
+        container.append(postcss.rule({
+          selector: generateSelector(child),
+          nodes: child.nodes
+        }));
+      });
+
+      block.replaceWith(cleanChildren(container));
+    });
+  };
 });

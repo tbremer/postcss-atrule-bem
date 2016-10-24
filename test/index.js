@@ -1,4 +1,5 @@
 import expect from 'expect';
+import postcss from 'postcss';
 import plugin from '../index';
 import { readFileSync } from 'fs';
 
@@ -30,4 +31,41 @@ describe('atrule-bem', () => {
       });
     });
   }
+
+  describe('options', () => {
+    it('silences warnings', () => {
+      const options = { warn: false };
+      const css = `
+@block a {
+  @block b {}
+}`.trim();
+      const expected = `
+.a {
+    @block b {}
+}`.trim();
+
+      return postcss(plugin(options)).process(css)
+        .then(res => {
+          expect(res.css).toEqual(expected);
+          expect(res.warnings.length).toEqual(0);
+        });
+    });
+
+    it('loosely produces components', () => {
+      const options = { strict: false };
+      const css = `
+@block a {
+  @block b {}
+}`.trim();
+      const expected = `
+.a {}
+.a.b {}`.trim();
+
+      return postcss(plugin(options)).process(css)
+        .then(res => {
+          expect(res.css).toEqual(expected);
+          expect(res.warnings.length).toEqual(0);
+        });
+    });
+  });
 });
