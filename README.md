@@ -41,6 +41,28 @@ _Efficiently create BEM components._
 }
 ```
 
+## Options
+
+#### `strict`
+
+Type: `Boolean`;
+Default: `true`
+
+**Disallows improperly formed components**
+- Block's can only have: Elements and Modifiers.
+- Elements can only have Modifiers.
+- Modifiers cannot house any types.
+
+***Side Effect:* turning off `strict` turns off warnings**
+
+#### `warn`
+
+Type: `Boolean`
+Default: `true`
+
+**Turns on warnings for imporperly formed components**
+
+
 ## Usage
 
 Add *atrule-bem* to your build tool:
@@ -82,13 +104,4 @@ Open for pull requests in the following areas:
   - throw a warning and don't compile when:
     - a block is created twice (name collisions)
     - a block makes reference to another block
-- Strict mode (as an option)
-	- disallow blocks to have blocks as children
-	- disallow elements to have blocks as children
-	- disallow modifiers to have blocks as children
-	- disallow elements to have elements as children
-	- disallow modifiers to have elements as children
-	- disallow modifiers to have modifiers as children
-- Warning messages (turned on by default)
-	- warn when one of the previous conditions are met
 - any feature I may have missed. (you decide!)

@@ -72,8 +72,19 @@ function cleanChildren(container) {
   return clone;
 }
 
+function getOption(name, options) {
+  return options && name in options ? options[name] : BASE_OPTIONS[name];
+}
+
+function getOptions(options) {
+  return {
+    strict: getOption('strict', options),
+    warn: getOption('warn', options)
+  };
+}
+
 export default postcss.plugin('postcss-atrule-bem', options => {
-  const opts = Object.assign({}, BASE_OPTIONS, options);
+  const opts = getOptions(options);
 
   return (root, result) => {
     root.walkAtRules(BLOCK, block => {

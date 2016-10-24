@@ -8,6 +8,7 @@ const tests = [
   'base-with-props',
   'multiple-inner',
   'multiple-blocks',
+  'dont-affect-other-atrules',
   'warning-block-in-block',
   'warning-element-in-element',
   'warning-modifier-in-modifier',
