@@ -1,6 +1,6 @@
 {
   "name": "postcss-atrule-bem",
-  "description": "Efficiently create BEM components.",
+  "description": "Transpile to BEM Components",
   "version": "2.0.0",
   "main": "lib/index.js",
   "repository": {

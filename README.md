@@ -1,8 +1,8 @@
 atrule-bem
 ---
-[![Travis](https://img.shields.io/travis/tbremer/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/tbremer/listen-in)
-[![npm](https://img.shields.io/npm/v/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/listen-in)
-[![npm](https://img.shields.io/npm/l/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://github.com/tbremer/listen-in/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/tbremer/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/tbremer/postcss-atrule-bem)
+[![npm](https://img.shields.io/npm/v/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/postcss-atrule-bem)
+[![npm](https://img.shields.io/npm/l/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://github.com/tbremer/postcss-atrule-bem/blob/master/LICENSE)
 
 _Efficiently create BEM components._
 
@@ -45,7 +45,8 @@ _Efficiently create BEM components._
 
 #### `strict`
 
-Type: `Boolean`;
+Type: `Boolean`
+
 Default: `true`
 
 **Disallows improperly formed components**
@@ -53,11 +54,12 @@ Default: `true`
 - Elements can only have Modifiers.
 - Modifiers cannot house any types.
 
-***Side Effect:* turning off `strict` turns off warnings**
+***Side Effect:** turning off `strict` turns off warnings*
 
 #### `warn`
 
 Type: `Boolean`
+
 Default: `true`
 
 **Turns on warnings for imporperly formed components**
