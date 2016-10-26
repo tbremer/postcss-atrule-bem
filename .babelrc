@@ -1,4 +1,12 @@
 {
-  "presets": [ "es2015" ],
-  "plugins": [ "add-module-exports" ]
+  "env": {
+    "commonjs": {
+      "presets": [ "es2015" ]
+    },
+    "es": {
+      "presets": [
+        [ "es2015" , { "modules": false } ]
+      ],
+    }
+  }
 }

@@ -1,0 +1,6 @@
+@block foo {
+  @element bar, baz {
+    @modifier bing {
+    }
+  }
+}

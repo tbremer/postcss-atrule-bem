@@ -1,10 +1,11 @@
 import expect from 'expect';
 import postcss from 'postcss';
-import plugin from '../index';
+import plugin from '../src/index';
 import { readFileSync } from 'fs';
 
 const tests = [
   'base',
+  'multiple-rules',
   'base-with-props',
   'multiple-inner',
   'multiple-blocks',

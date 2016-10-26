@@ -98,6 +98,20 @@ postcss([ atRuleBem() ])
 .process(/* your css */, /* options */);
 ```
 
+### Examples
+```css
+/* you can chain selectors with commas `,` */
+
+/* input: */
+@block foo {
+  @element bar, baz {}
+}
+
+/* output: */
+.foo {}
+.foo__bar, .foo__baz {}
+```
+
 ### Pull requests welcome.
 
 Open for pull requests in the following areas:
@@ -106,4 +120,3 @@ Open for pull requests in the following areas:
   - throw a warning and don't compile when:
     - a block is created twice (name collisions)
     - a block makes reference to another block
-- any feature I may have missed. (you decide!)
