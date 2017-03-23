@@ -1,8 +1,8 @@
 atrule-bem
 ---
-[![Travis](https://img.shields.io/travis/tbremer/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/tbremer/postcss-atrule-bem)
-[![npm](https://img.shields.io/npm/v/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/postcss-atrule-bem)
-[![npm](https://img.shields.io/npm/l/postcss-atrule-bem.svg?maxAge=2592000?style=flat-square)](https://github.com/tbremer/postcss-atrule-bem/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/tbremer/postcss-atrule-bem.svg?style=flat-square)](https://travis-ci.org/tbremer/postcss-atrule-bem)
+[![npm](https://img.shields.io/npm/v/postcss-atrule-bem.svg?style=flat-square)](https://www.npmjs.com/package/postcss-atrule-bem)
+[![npm](https://img.shields.io/npm/l/postcss-atrule-bem.svg?style=flat-square)](https://github.com/tbremer/postcss-atrule-bem/blob/master/LICENSE)
 
 _Efficiently create BEM components._
 

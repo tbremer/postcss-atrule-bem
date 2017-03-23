@@ -1,8 +1,6 @@
 {
+  "presets": [ "es2015" ],
   "env": {
-    "commonjs": {
-      "presets": [ "es2015" ]
-    },
     "es": {
       "presets": [
         [ "es2015" , { "modules": false } ]
