@@ -2,7 +2,7 @@
   "name": "postcss-atrule-bem",
   "description": "Transpile to BEM Components",
   "version": "2.1.0",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
   "repository": {
