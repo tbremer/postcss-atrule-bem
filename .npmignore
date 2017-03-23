@@ -3,3 +3,5 @@ test/
 .eslint*
 .travis*
 yarn.lock
+.babelrc
+.npmignore
