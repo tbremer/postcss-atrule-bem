@@ -1,6 +1,5 @@
-*
-!package.json
-!dist/
-!es/
-!README.md
-!LICENSE
+test/
+.editorconfig
+.eslint*
+.travis*
+yarn.lock
