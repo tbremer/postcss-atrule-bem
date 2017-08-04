@@ -14,11 +14,11 @@
   "scripts": {
     "build:es": "NODE_ENV=es babel src/ --out-dir es/",
     "build:commonjs": "NODE_ENV=commonjs babel src/ --out-dir dist/",
-    "build": "yarn build:es && yarn build:commonjs",
-    "prepublish": "yarn build",
+    "build": "npm run build:es && npm run build:commonjs",
+    "prepublishOnly": "npm run build",
     "lint": "eslint ./",
     "test": "mocha --compilers js:babel-register",
-    "test:watch": "yarn test -- --watch --reporter min"
+    "test:watch": "npm run test -- --watch --reporter min"
   },
   "keywords": [
     "postcss",
