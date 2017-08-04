@@ -1,4 +1,4 @@
 .a {}
 .a__b {
-    @element c {}
+        @element c {}
 }

@@ -54,7 +54,7 @@ Default: `true`
 - Elements can only have Modifiers.
 - Modifiers cannot house any types.
 
-***Side Effect:** turning off `strict` turns off warnings*
+_**Side Effect:** turning off `strict` turns off warnings_
 
 #### `warn`
 
@@ -116,7 +116,12 @@ postcss([ atRuleBem() ])
 
 Open for pull requests in the following areas:
 
-- Collision dectection
+- Collision detection
   - throw a warning and don't compile when:
     - a block is created twice (name collisions)
     - a block makes reference to another block
+
+## Updating 3.0 for CommonJS users.
+I added a babel plugin to correctly adapt the default export to the expected CommonJS type.
+
+To upgrade change `const atRuleBem = require('postcss-atrule-bem').default;` to `const atRuleBem = require('postcss-atrule-bem');`

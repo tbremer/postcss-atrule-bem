@@ -1,4 +1,4 @@
 .a {}
 .a--b {
-    @modifier c {}
+        @modifier c {}
 }

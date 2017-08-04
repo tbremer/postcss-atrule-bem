@@ -43,7 +43,7 @@ describe('atrule-bem', () => {
 }`.trim();
       const expected = `
 .a {
-    @block b {}
+  @block b {}
 }`.trim();
 
       return postcss(plugin(options)).process(css)
