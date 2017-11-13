@@ -1,0 +1,8 @@
+@b foo {
+    @e bar {}
+    @e baz {}
+    @e lorem {
+        @m ipsum {}
+    }
+    @m bing {}
+}

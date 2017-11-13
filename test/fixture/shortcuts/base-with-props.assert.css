@@ -1,0 +1,11 @@
+@b foo {
+    prop1: val;
+
+    @e bar {
+        prop2: val;
+
+        @m baz {
+            prop3: val;
+        }
+    }
+}

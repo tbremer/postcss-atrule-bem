@@ -1,15 +1,8 @@
-import {
-  ELEMENT,
-  MODIFIER,
-  VALID_RULES,
-  VALID_CHILDREN
-} from './constants';
-
-function childValidated(child, parent) {
+function childValidated(child, parent, VALID_CHILDREN) {
   return VALID_CHILDREN[parent.name].indexOf(child.name) !== -1;
 }
 
-function cleanChildren(container) {
+function cleanChildren(container, VALID_RULES) {
   const clone = container.clone();
 
   for (const rule of clone.nodes) {
@@ -28,16 +21,16 @@ function cleanChildren(container) {
   return clone;
 }
 
-function getPrefix(type) {
+function getPrefix(type, ELEMENT, MODIFIER, OPTIONS) {
   switch (type) {
-    case ELEMENT: return '__';
-    case MODIFIER: return '--';
+    case ELEMENT: return OPTIONS.separators.element;
+    case MODIFIER: return OPTIONS.separators.modifier;
     default: return '.';
   }
 }
 
-function generateSelector({ name, params }) {
-  const prefix = getPrefix(name);
+function generateSelector({ name, params }, ELEMENT, MODIFIER, OPTIONS) {
+  const prefix = getPrefix(name, ELEMENT, MODIFIER, OPTIONS);
 
   return params.split(',').reduce((all, curr) => [].concat(all, `${prefix}${curr.trim()}`), []);
 }

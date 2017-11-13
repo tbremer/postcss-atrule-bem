@@ -64,6 +64,20 @@ Default: `true`
 
 **Turns on warnings for imporperly formed components**
 
+#### `shortcuts`
+
+Type: `Boolean`
+
+Default: `false`
+
+#### `separators`
+
+Type: `Object`
+
+Default: `{
+    element: '__',
+    modifier: '--'
+  }`
 
 ## Usage
 

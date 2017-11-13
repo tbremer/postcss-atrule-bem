@@ -17,11 +17,11 @@ const tests = [
 ];
 
 describe('atrule-bem', () => {
-  for (const test of tests) {
-    describe(test, () => {
-      it('should pass', () => {
-        const testCss = readFileSync(`./test/fixture/${test}.assert.css`).toString();
-        const expectedCss = readFileSync(`./test/fixture/${test}.expected.css`).toString();
+  describe('should pass', () => {
+    for (const test of tests) {
+      it(test, () => {
+        const testCss = readFileSync(`./test/fixture/simple/${test}.assert.css`).toString();
+        const expectedCss = readFileSync(`./test/fixture/simple/${test}.expected.css`).toString();
 
         return plugin.process(testCss)
           .then(res => {
@@ -31,8 +31,8 @@ describe('atrule-bem', () => {
             }
           });
       });
-    });
-  }
+    }
+  });
 
   describe('options', () => {
     it('silences warnings', () => {
@@ -68,6 +68,97 @@ describe('atrule-bem', () => {
           expect(res.css).toEqual(expected);
           expect(res.warnings.length).toEqual(0);
         });
+    });
+
+    it('changes element separator', () => {
+      const options = {
+        separators: {
+          element: '-'
+        }
+      };
+      const css = `
+@block a {
+  @element b {
+    @modifier c {}
+  }
+}`.trim();
+      const expected = `
+.a {}
+.a-b {}
+.a-b--c {}`.trim();
+
+      return postcss(plugin(options)).process(css)
+        .then(res => {
+          expect(res.css).toEqual(expected);
+          expect(res.warnings.length).toEqual(0);
+        });
+    });
+
+    it('changes modifier separator', () => {
+      const options = {
+        separators: {
+          modifier: '_'
+        }
+      };
+      const css = `
+@block a {
+  @element b {
+    @modifier c {}
+  }
+}`.trim();
+      const expected = `
+.a {}
+.a__b {}
+.a__b_c {}`.trim();
+
+      return postcss(plugin(options)).process(css)
+        .then(res => {
+          expect(res.css).toEqual(expected);
+          expect(res.warnings.length).toEqual(0);
+        });
+    });
+
+    it('changes element and modifier separators', () => {
+      const options = {
+        separators: {
+          element: '-',
+          modifier: '_'
+        }
+      };
+      const css = `
+@block a {
+  @element b {
+    @modifier c {}
+  }
+}`.trim();
+      const expected = `
+.a {}
+.a-b {}
+.a-b_c {}`.trim();
+
+      return postcss(plugin(options)).process(css)
+        .then(res => {
+          expect(res.css).toEqual(expected);
+          expect(res.warnings.length).toEqual(0);
+        });
+    });
+
+    describe('shortcuts support', () => {
+      for (const test of tests) {
+        it(test, () => {
+          const options = { shortcuts: true };
+          const testCss = readFileSync(`./test/fixture/shortcuts/${test}.assert.css`).toString();
+          const expectedCss = readFileSync(`./test/fixture/shortcuts/${test}.expected.css`).toString();
+
+          return postcss(plugin(options)).process(testCss)
+            .then(res => {
+              expect(res.css).toEqual(expectedCss);
+              if (/warning/.test(test)) {
+                expect(res.messages.length).toEqual(1);
+              }
+            });
+        });
+      }
     });
   });
 });

@@ -1,0 +1,6 @@
+@b foo {
+  @e bar, baz {
+    @m bing {
+    }
+  }
+}
