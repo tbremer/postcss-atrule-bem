@@ -9,7 +9,18 @@
     "url": "https://github.com/tbremer/postcss-bem-atrule.git",
     "type": "git"
   },
-  "author": "Tom Bremer <tom@tbremer.com>",
+  "author": {
+    "name": "Tom Bremer",
+    "email": "tom@tbremer.com",
+    "url": "https://github.com/tbremer"
+  },
+  "contributors": [
+    {
+      "name": "SilencerWeb",
+      "email": "Silencer.Web@mail.ru",
+      "url": "https://github.com/SilencerWeb"
+    }
+  ],
   "license": "MIT",
   "scripts": {
     "build:es": "NODE_ENV=es babel src/ --out-dir es/",
@@ -17,7 +28,7 @@
     "build": "npm run build:es && npm run build:commonjs",
     "prepublishOnly": "npm run build",
     "lint": "eslint ./",
-    "test": "mocha --compilers js:babel-register",
+    "test": "mocha --require babel-core/register",
     "test:watch": "npm run test -- --watch --reporter min"
   },
   "keywords": [
