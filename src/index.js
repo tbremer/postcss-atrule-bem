@@ -5,16 +5,20 @@ import { cleanChildren, generateSelector, prependAonB, childValidated } from './
 export default postcss.plugin(
   'postcss-atrule-bem',
   opts => {
-    const OPTIONS = Object.assign({}, {
-      strict: true,
-      warn: true,
-      shortcuts: false,
-      separators: {
-        element: '__',
-        modifier: '--'
+    const OPTIONS = Object.assign(
+      {},
+      {
+        strict: true,
+        warn: true,
+        shortcuts: false,
+        separators: {
+          element: '__',
+          modifier: '--'
+        },
       },
-    }, opts); //eslint-disable-line object-property-newline
-    
+      opts
+    );
+
     if (OPTIONS.separators.element === undefined) {
       OPTIONS.separators.element = '__';
     }
@@ -22,21 +26,10 @@ export default postcss.plugin(
     if (OPTIONS.separators.modifier === undefined) {
       OPTIONS.separators.modifier = '--';
     }
-    
-    let BLOCK;
-    let ELEMENT;
-    let MODIFIER;
-    
-    if (OPTIONS.shortcuts) {
-      BLOCK = 'b';
-      ELEMENT = 'e';
-      MODIFIER = 'm';
-    } else {
-      BLOCK = 'block';
-      ELEMENT = 'element';
-      MODIFIER = 'modifier';
-    }
-    
+
+    const BLOCK = OPTIONS.shortcuts ? 'b' : 'block';
+    const ELEMENT = OPTIONS.shortcuts ? 'e' : 'element';
+    const MODIFIER = OPTIONS.shortcuts ? 'm' : 'modifier';
     const VALID_RULES = [ BLOCK, ELEMENT, MODIFIER ];
     const VALID_CHILDREN = {
       [BLOCK]: [ ELEMENT, MODIFIER ],
@@ -71,7 +64,7 @@ export default postcss.plugin(
         }
       }
     }
-    
+
     return function atruleBEM(root, result) {
       root.walkAtRules(BLOCK, blockAtRule => {
         const CONTAINER = new Root();

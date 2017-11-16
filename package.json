@@ -1,6 +1,6 @@
 {
   "name": "postcss-atrule-bem",
-  "description": "Transpile to BEM Components",
+  "description": "Transpile BEM Components to valid CSS",
   "version": "3.0.1",
   "main": "dist/index.js",
   "module": "es/index.js",

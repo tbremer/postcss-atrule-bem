@@ -159,6 +159,26 @@ describe('atrule-bem', () => {
             });
         });
       }
+
+      it('loosely produces components', () => {
+        const options = {
+          strict: false,
+          shortcuts: true
+        };
+        const css = `
+@b a {
+  @b b {}
+}`.trim();
+        const expected = `
+.a {}
+.a.b {}`.trim();
+
+        return postcss(plugin(options)).process(css)
+          .then(res => {
+            expect(res.css).toEqual(expected);
+            expect(res.warnings.length).toEqual(0);
+          });
+      });
     });
   });
 });
