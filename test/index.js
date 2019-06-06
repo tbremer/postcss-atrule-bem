@@ -26,7 +26,7 @@ describe('atrule-bem', () => {
         return plugin.process(testCss)
           .then(res => {
             expect(res.css).toEqual(expectedCss);
-            if (/warning/.test(test)) {
+            if ((/warning/).test(test)) {
               expect(res.messages.length).toEqual(1);
             }
           });
@@ -153,7 +153,7 @@ describe('atrule-bem', () => {
           return postcss(plugin(options)).process(testCss)
             .then(res => {
               expect(res.css).toEqual(expectedCss);
-              if (/warning/.test(test)) {
+              if ((/warning/).test(test)) {
                 expect(res.messages.length).toEqual(1);
               }
             });
