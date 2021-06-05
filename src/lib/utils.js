@@ -29,8 +29,13 @@ function getPrefix(type, ELEMENT, MODIFIER, OPTIONS) {
   }
 }
 
-function generateSelector({ name, params }, ELEMENT, MODIFIER, OPTIONS) {
-  const prefix = getPrefix(name, ELEMENT, MODIFIER, OPTIONS);
+function generateSelector({ name, parent, params }, ELEMENT, MODIFIER, OPTIONS, BLOCK_SELECTOR) {
+  let prefix = getPrefix(name, ELEMENT, MODIFIER, OPTIONS);
+
+  /* If using an element inside a modifier, apply the modifier to the block selector. */
+  if (name === 'e' && parent && parent.name === 'm') {
+    prefix = ` ${BLOCK_SELECTOR[0]}${prefix}`;
+  }
 
   return params.split(',').reduce((all, curr) => [].concat(all, `${prefix}${curr.trim()}`), []);
 }

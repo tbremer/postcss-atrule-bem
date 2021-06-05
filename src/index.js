@@ -34,10 +34,10 @@ export default postcss.plugin(
     const VALID_CHILDREN = {
       [BLOCK]: [ ELEMENT, MODIFIER ],
       [ELEMENT]: [ MODIFIER ],
-      [MODIFIER]: []
+      [MODIFIER]: [ ELEMENT ]
     };
 
-    function recursiveWalker(container, previousSelector, parent, options, result) {
+    function recursiveWalker(container, previousSelector, parent, options, result, BLOCK_SELECTOR) {
       return function(node) {
         if (node.parent !== parent) return;
         if (VALID_RULES.indexOf(node.name) === -1) return;
@@ -50,7 +50,7 @@ export default postcss.plugin(
           return;
         }
 
-        const SELECTOR = prependAonB(previousSelector, generateSelector(node, ELEMENT, MODIFIER, OPTIONS));
+        const SELECTOR = prependAonB(previousSelector, generateSelector(node, ELEMENT, MODIFIER, OPTIONS, BLOCK_SELECTOR));
 
         container.append(
           new Rule({
@@ -60,7 +60,7 @@ export default postcss.plugin(
         );
 
         if (node.nodes.length) {
-          node.walkAtRules(recursiveWalker(container, SELECTOR, node, options, result))
+          node.walkAtRules(recursiveWalker(container, SELECTOR, node, options, result, BLOCK_SELECTOR))
         }
       }
     }
@@ -77,7 +77,7 @@ export default postcss.plugin(
           })
         );
 
-        blockAtRule.walkAtRules(recursiveWalker(CONTAINER, BLOCK_SELECTOR, blockAtRule, OPTIONS, result));
+        blockAtRule.walkAtRules(recursiveWalker(CONTAINER, BLOCK_SELECTOR, blockAtRule, OPTIONS, result, BLOCK_SELECTOR));
         blockAtRule.replaceWith(cleanChildren(CONTAINER, VALID_RULES));
       });
     };
