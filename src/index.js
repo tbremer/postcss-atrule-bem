@@ -34,7 +34,7 @@ export default postcss.plugin(
     const VALID_CHILDREN = {
       [BLOCK]: [ ELEMENT, MODIFIER ],
       [ELEMENT]: [ MODIFIER ],
-      [MODIFIER]: [ ELEMENT ]
+      [MODIFIER]: [ ELEMENT, MODIFIER ]
     };
 
     function recursiveWalker(container, previousSelector, parent, options, result, BLOCK_SELECTOR) {
